@@ -1,12 +1,4 @@
-"""Evaluates a wordstorm puzzle and returns all possible words that can be made from the puzzle."""
-"""Note: it may be better to load a dictionary file into a list and search that list instead of using pyDictionary.
-https://github.com/AaronFlanagan20/Countdown-letters-game-solver
-"""
-
-
-# define max length of word as 9
-# define min length of word as 4
-MAX_WORD_LENGTH = 9
+MAX_WORD_LENGTH = 10
 MIN_WORD_LENGTH = 4
 
 
@@ -25,9 +17,11 @@ def loadWords():
     return dictionary
 
 
-def canMakeWord(word, letters):
+def canMakeWord(word, letters, requiredLetter):
     """Checks if a word can be made from the letters."""
-    
+    if requiredLetter not in word:
+        return False
+
     # loop through all letters in the word
     for letter in word:
         # check if the letter is in the letters
@@ -55,8 +49,8 @@ def filterWordsByLength(words):
     return filteredWords
 
 
-def filterWordsByLetters(words, letters):
-    """Filters words based on whether they can be made from the letters."""
+def filterWordsByLetters(words, letters, requiredLetter):
+    """Filters words based on whether they can be made from the letters. (also checks that there is not more duplicates than available.)"""
     
     # create a list to store the filtered words
     filteredWords = []
@@ -67,19 +61,19 @@ def filterWordsByLetters(words, letters):
         word = word.strip()
 
         # check if the word can be made from the letters
-        if canMakeWord(word, letters):
+        if canMakeWord(word, letters, requiredLetter):
             # add the word to the filtered words list
             filteredWords.append(word)
     return filteredWords
 
 
-def getSolution(letters):
+def getSolution(letters, requiredLetter):
     """Returns all possible words that can be made from the puzzle."""
         
     possibleWords = loadWords()
     possibleWords = filterWordsByLength(possibleWords)
     # filter words based on whether they can be made from the letters
-    possibleWords = filterWordsByLetters(possibleWords, letters)
+    possibleWords = filterWordsByLetters(possibleWords, letters, requiredLetter)
     return possibleWords
 
 
@@ -88,13 +82,16 @@ def main():
 
     print("Wordstorm Solver")
     letters = input("Enter the letters: ")
+    requiredLetter = input("Enter the required letter: ")
 
     # Get all possible words from the letters
-    possibleWords = getSolution(letters)
+    possibleWords = getSolution(letters, requiredLetter)
 
     # Print all possible words
-    print(f"Possible words: {possibleWords}")
-    
+    print(f"9 Letter Word: {[word for word in possibleWords if len(word) == 9]}")
+    for i in range (8, 3, -1):
+        print(f"{i} Letter Words: {[word for word in possibleWords if len(word) == i]}")
+
 
 if __name__ == "__main__":
     main()
