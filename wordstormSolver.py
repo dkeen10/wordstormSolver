@@ -40,6 +40,21 @@ def canMakeWord(word, letters):
     return True
 
 
+def filterWordsByLength(words):
+    """Filters words based on their length."""
+    
+    # create a list to store the filtered words
+    filteredWords = []
+
+    # loop through all words in the dictionary
+    for word in words:
+        # check if the word is between the min and max word length
+        if len(word) > MIN_WORD_LENGTH and len(word) <= MAX_WORD_LENGTH:
+            # add the word to the filtered words list
+            filteredWords.append(word)
+    return filteredWords
+
+
 def filterWordsByLetters(words, letters):
     """Filters words based on whether they can be made from the letters."""
     
@@ -58,26 +73,11 @@ def filterWordsByLetters(words, letters):
     return filteredWords
 
 
-def filterWordsByLength(words):
-    """Filters words based on their length."""
-    
-    # create a list to store the filtered words
-    filteredWords = []
-
-    # loop through all words in the dictionary
-    for word in words:
-        # check if the word is between the min and max word length
-        if len(word) >= MIN_WORD_LENGTH and len(word) <= MAX_WORD_LENGTH:
-            # add the word to the filtered words list
-            filteredWords.append(word)
-    return filteredWords
-
-
 def getSolution(letters):
     """Returns all possible words that can be made from the puzzle."""
         
     possibleWords = loadWords()
-    possibleWrods = filterWordsByLength(possibleWords)
+    possibleWords = filterWordsByLength(possibleWords)
     # filter words based on whether they can be made from the letters
     possibleWords = filterWordsByLetters(possibleWords, letters)
     return possibleWords
