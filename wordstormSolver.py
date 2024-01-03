@@ -1,10 +1,9 @@
-MAX_WORD_LENGTH = 10
+MAX_WORD_LENGTH = 9
 MIN_WORD_LENGTH = 4
 
 
 def loadWords():
     """Loads a dictionary file into a list."""
-    
     # open the dictionary file
     file = open("dictionary.txt", "r")
 
@@ -43,7 +42,7 @@ def filterWordsByLength(words):
     # loop through all words in the dictionary
     for word in words:
         # check if the word is between the min and max word length
-        if len(word) > MIN_WORD_LENGTH and len(word) <= MAX_WORD_LENGTH:
+        if len(word) > MIN_WORD_LENGTH and len(word) <= MAX_WORD_LENGTH + 1:
             # add the word to the filtered words list
             filteredWords.append(word)
     return filteredWords
